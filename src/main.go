@@ -2,17 +2,29 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main() {
 
-	fmt.Println("Enter your name")
-	var name string
-	fmt.Scan(&name)
+	showMenu()
+	command := setCommand()
 
-	fmt.Println()
+	switch command {
+	case 1:
+		fmt.Println("Monitoring")
+	case 2:
+		fmt.Println("Showing logs")
+	case 0:
+		fmt.Println("Exiting")
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
+	}
+}
 
-	fmt.Println("Hello", name)
+func showMenu() {
+	fmt.Println("Welcome")
 
 	fmt.Println()
 
@@ -20,8 +32,12 @@ func main() {
 	fmt.Println("2- Show Logs")
 	fmt.Println("0- Exit")
 
+	fmt.Println()
+}
+
+func setCommand() int {
 	var command int
 	fmt.Scan(&command)
-	fmt.Println("Command was", command)
 
+	return command
 }
