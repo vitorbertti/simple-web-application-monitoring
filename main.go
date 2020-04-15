@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -26,9 +27,9 @@ func main() {
 		case 1:
 			startMonitoring()
 		case 2:
-			fmt.Println("Showing logs")
+			showLogs()
 		case 0:
-			fmt.Println("Exiting")
+			fmt.Println("Exiting...")
 			os.Exit(0)
 		default:
 			fmt.Println("Invalid option")
@@ -117,6 +118,19 @@ func saveLog(site string, status bool) {
 		fmt.Println("Error:", err)
 	}
 
-	file.WriteString(site + " - online: " + strconv.FormatBool(status) + "\n")
+	file.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - online: " + strconv.FormatBool(status) + "\n")
 	file.Close()
+}
+
+func showLogs() {
+	fmt.Println("Showing logs...")
+	fmt.Println("")
+
+	file, err := ioutil.ReadFile("log.txt")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	fmt.Println(string(file))
 }
